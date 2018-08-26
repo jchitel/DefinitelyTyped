@@ -1,39 +1,47 @@
 // Type definitions for posthtml-render 1.1
 // Project: https://github.com/posthtml/posthtml-render#readme
-// Definitions by: My Self <https://github.com/me>
+// Definitions by: Jake Chitel <https://github.com/jchitel>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-/*~ If this module is a UMD module that exposes a global variable 'myLib' when
- *~ loaded outside a module loader environment, declare that global here.
- *~ Otherwise, delete this declaration.
- */
-export as namespace myLib;
+import { PostHTMLTree } from '../posthtml-parser';
 
-/*~ If this module has methods, declare them as functions like so.
- */
-export function myMethod(a: string): string;
-export function myOtherMethod(a: number): number;
-
-/*~ You can declare types that are available via importing the module */
-export interface someType {
-    name: string;
-    length: number;
-    extras?: string[];
-}
-
-/*~ You can declare properties of the module using const, let, or var */
-export const myField: number;
-
-/*~ If there are types, properties, or methods inside dotted names
- *~ of the module, declare them inside a 'namespace'.
- */
-export namespace subProp {
-    /*~ For example, given this definition, someone could write:
-     *~   import { subProp } from 'yourModule';
-     *~   subProp.foo();
-     *~ or
-     *~   import * as yourMod from 'yourModule';
-     *~   yourMod.subProp.foo();
+export interface RenderOptions {
+    /**
+     * Array of explicit strings or RegExps that match tags that should be rendered as self-closing elements.
+     * These will be included in addition to the standard set of self-closing elements:
+     * - area
+     * - base
+     * - br
+     * - col
+     * - command
+     * - embed
+     * - hr
+     * - img
+     * - input
+     * - keygen
+     * - link
+     * - menuitem
+     * - meta
+     * - param
+     * - source
+     * - track
+     * - wbr
+     * - import (custom from PostHTML)
+     * - include (custom from PostHTML)
+     * - extend (custom from PostHTML)
      */
-    export function foo(): void;
+    singleTags?: Array<string | RegExp>;
+    /**
+     * Format to use for rendering self-closing tags:
+     * - tag: use a closing tag instead of rendering as a self-closing tag (`<br></br>`)
+     * - slash: render as an XML self-closing tag (`<br />`)
+     * - default: render as an HTML standard self-closing tag, as just an opening tag (`<br>`)
+     */
+    closingSingleTag?: 'tag' | 'slash';
 }
+/**
+ * Renders a parsed PostHTML tree structure to a standard HTML string
+ * @param tree A parsed PostHTML tree structure
+ * @param options A set of options to use for rendering
+ */
+export default function render(tree: PostHTMLTree, options?: RenderOptions): string;
