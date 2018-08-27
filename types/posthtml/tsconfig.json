@@ -17,6 +17,8 @@
     },
     "files": [
         "index.d.ts",
+        "lib/index.d.ts",
+        "lib/api.d.ts",
         "posthtml-tests.ts"
     ]
 }

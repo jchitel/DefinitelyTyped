@@ -62,24 +62,24 @@ export interface PostHTMLTreeNode {
     /** The set of attributes of this node. If there are no attributes, this will be undefined. */
     attrs?: { [type: string]: string };
     /** The children of this node. If there are no children, this will be an empty array. */
-    content: PostHTMLTree;
+    content: PostHTMLParsedTree;
 }
 
 /**
  * A parsed HTML tree.
  * Because HTML documents can have multiple root elements, this is an array.
  */
-export type PostHTMLTree = Array<string | PostHTMLTreeNode>;
+export interface PostHTMLParsedTree extends Array<string | PostHTMLTreeNode> {}
 
 /**
  * Creates a parser function utilizing the provided options.
  * @param options Options to use for parsing.
  */
-export default function parser(options: ParserOptions): ((html: string) => PostHTMLTree);
+export default function parser(options: ParserOptions): (html: string) => PostHTMLParsedTree;
 
 /**
  * Parses an HTML string using the provided options.
  * @param html HTML string to parse.
  * @param options Options to use for parsing.
  */
-export default function parser(html: string, options?: ParserOptions): PostHTMLTree;
+export default function parser(html: string, options?: ParserOptions): PostHTMLParsedTree;
